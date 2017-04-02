@@ -28,3 +28,7 @@ phpunit.phar
 
 tests/_output/*
 tests/_support/_generated
+
+/web/data
+/web/css/*.css
+/web/css/*.css.map
