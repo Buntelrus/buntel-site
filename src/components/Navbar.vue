@@ -10,22 +10,21 @@
       </a>
     </div>
     <div class="navbar-menu" :class="{open: menuOpen}">
-      <router-link to="/about" class="navbar-item" @click="collapseMenu">About</router-link>
+      <router-link v-for="item in menu" :key="item.url" :to="item.url" class="navbar-item" @click="collapseMenu" :target="item.newTab ? '_blank' : ''">{{ item.text }}</router-link>
     </div>
   </nav>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component"
+import {IMenu} from "@/utils/api"
 
 @Options({
-  props: {
-    msg: String,
-  },
+  props: ['menu'],
 })
 export default class Navbar extends Vue {
-  msg!: string;
-  menuOpen = true
+  menu: IMenu[] = []
+  menuOpen = false
 
   collapseMenu() {
     this.menuOpen = false

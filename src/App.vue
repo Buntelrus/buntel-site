@@ -1,70 +1,33 @@
 <template>
   <section class="section">
-    <Navbar/>
+    <Navbar :menu="menu"/>
   </section>
   <section class="section">
     <router-view />
   </section>
-  <Footer :footer="footer"/>
+  <Footer v-if="global" :footer="global.footer"/>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component"
 import Navbar from "@/components/Navbar.vue"
-import Footer from "@/components/Footer.vue";
+import Footer from "@/components/Footer.vue"
+import fakeApi, {IGlobal, IPage, IMenu} from "@/utils/api"
 
 @Options({
-  components: {Footer, Navbar },
+  components: { Footer, Navbar }
 })
 export default class App extends Vue {
-  footer = {
-    title: 'My Footer',
-    columns: [
-      {
-        title: 'Column 1',
-        links: [{
-          text: 'Link 1',
-          title: 'Link1',
-          url: '#',
-          newTab: false,
-        },
-        {
-          text: 'Link 2',
-          title: 'Link2',
-          url: '#',
-          newTab: false,
-        }]
-      },{
-        title: 'Column 2',
-        links: [{
-          text: 'Link 1',
-          title: 'Link1',
-          url: '#',
-          newTab: false,
-        },
-        {
-          text: 'Link 2',
-          title: 'Link2',
-          url: '#',
-          newTab: false,
-        }]
-      }
-    ],
-    socialMediaLinks: [
-      {
-        type: 'twitter',
-        link: '#'
-      },{
-        type: 'youtube',
-        link: '#'
-      },{
-        type: 'facebook',
-        link: '#'
-      },{
-        type: 'instagram',
-        link: '#'
-      },
-    ]
+  pages: IPage[] = []
+  global: IGlobal|null = null
+  menu: IMenu[] = []
+
+  async created() {
+    this.pages = await fakeApi('pages')
+    this.global = await fakeApi('global')
+    this.menu = this.pages
+        .filter(page => page.slug !== 'home')
+        .map(page => { return { url: '/' + page.slug, text: page.title, newTab: false }})
   }
 }
 </script>

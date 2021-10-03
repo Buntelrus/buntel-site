@@ -1,7 +1,9 @@
 <template>
-  <div class="container">
-    <img alt="Vue logo" src="../assets/logo.png" />
-  </div>
+  <h1>
+    <p>Hello,</p>
+    <p>I'm Julian,</p>
+    <p><span class="intend">web developer</span></p>
+  </h1>
 </template>
 
 <script lang="ts">
