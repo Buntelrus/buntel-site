@@ -8,7 +8,7 @@ export interface IMenu {
     text: string
     newTab: boolean
 }
-interface IFooter {
+export interface IFooter {
     title: string
     columns: IFooterColumn[]
     socialMediaLinks: ISocialMediaLink[]
