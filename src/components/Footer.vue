@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component"
-interface IFooter {}
+import { IFooter } from '@/utils/api'
 
 @Options({
   props: ['footer'],
@@ -37,10 +37,5 @@ export default class Navbar extends Vue {
 }
 </script>
 
-<style lang="sass">
-$footer-background-color: black
-$footer-color: black
-//$footer-padding: 3rem
-
-@import "~bulma/sass/layout/footer"
+<style scoped lang="sass">
 </style>
