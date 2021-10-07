@@ -1,4 +1,5 @@
 <template>
+  <PiMenu/>
   <section class="section">
     <Navbar :menu="menu"/>
   </section>
@@ -13,9 +14,10 @@ import { Options, Vue } from "vue-class-component"
 import Navbar from "@/components/Navbar.vue"
 import Footer from "@/components/Footer.vue"
 import fakeApi, {IGlobal, IPage, IMenu} from "@/utils/api"
+import PiMenu from "@/components/PiMenu.vue"
 
 @Options({
-  components: { Footer, Navbar }
+  components: {PiMenu, Footer, Navbar }
 })
 export default class App extends Vue {
   pages: IPage[] = []
