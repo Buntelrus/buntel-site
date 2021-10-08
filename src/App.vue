@@ -1,7 +1,7 @@
 <template>
-  <PiMenu/>
+  <PiMenu :menu="piMenu"/>
   <section class="section">
-    <Navbar :menu="menu"/>
+    <Navbar :menu="navMenu"/>
   </section>
   <section class="section">
     <router-view />
@@ -22,14 +22,18 @@ import PiMenu from "@/components/PiMenu.vue"
 export default class App extends Vue {
   pages: IPage[] = []
   global: IGlobal|null = null
-  menu: IMenu[] = []
+  navMenu: IMenu[] = []
+  piMenu: IMenu[] = []
 
   async created() {
     this.pages = await fakeApi('pages')
     this.global = await fakeApi('global')
-    this.menu = this.pages
+    const makeIMenu = (page: IPage) => { return { url: '/' + page.slug, text: page.title, newTab: false }}
+
+    this.navMenu = this.pages
         .filter(page => page.slug !== 'home')
-        .map(page => { return { url: '/' + page.slug, text: page.title, newTab: false }})
+        .map(makeIMenu)
+    this.piMenu = this.pages.map(makeIMenu)
   }
 }
 </script>
