@@ -1,19 +1,22 @@
 <template>
-  <menu class="pi-menu">
-    <ul class="menu-list">
-      <li v-for="item in itmes" :key="item"><a>{{ item }}</a></li>
-    </ul>
-  </menu>
-  <input type="number" v-model="tang">
-  <div class="tcontainer has-text-centered" :style="{'--m': 8}">
-<!--    <a href='#'>-->
-<!--      <img src="image_mid.jpg" alt="alt text"/>-->
-<!--    </a>-->
-    <a v-for="(item, i) in itmes" :key="item" :style="{'--i': i + 1}">
-      {{ item }}
-    </a>
-    <!-- the rest of those placed on the circle -->
+  <div class="modal" :class="{'is-active': isActive}">
+    <input type="number" v-model="numberItems">
+    <input type="number" v-model="iRotate1">
+    <input type="number" v-model="iTranslate">
+    <input type="number" v-model="iRotate2">
+<!--    <div class="modal-background"></div>-->
+    <div class="modal-content">
+      <menu class="pi-menu has-text-centered" :style="{'--a': numberItems}">
+<!--        <a class="button" :style="style1">Item 1x</a>-->
+<!--        <a v-for="(item, i) in itmes.slice(1)" :key="item" class="button" :style="{'&#45;&#45;i': i + 2}"-->
+        <a v-for="(item, i) in itmes" :key="item" class="button" :style="{'--i': i + 1}"
+          @click="toggleHover">
+          {{ item }}
+        </a>
+      </menu>
+    </div>
   </div>
+
 </template>
 
 <script lang="ts">
@@ -23,7 +26,13 @@ import {Options, Vue} from "vue-class-component"
 })
 export default class Card extends Vue {
   numberItems = 8
-  tang = 45
+  isActive = true
+//   rotate(
+//   .25turn) translate(6.66em) rotate(
+// -0.25turn);
+  iRotate1 = -25
+  iRotate2 = 25
+  iTranslate = 666
 
   get itmes() {
     const arr = []
@@ -31,6 +40,59 @@ export default class Card extends Vue {
       arr.push(`Item ${i + 1}`)
     }
     return arr
+  }
+
+  get rotate1() {
+    return `${this.iRotate1 / 100}turn`
+  }
+
+  get rotate2() {
+    return `${this.iRotate2 / 100}turn`
+  }
+
+  get translate() {
+    return `${this.iTranslate / 100}em`
+  }
+
+  get style1() {
+    return {
+      '--i': 1,
+      transform: `rotate(${this.rotate1}) translate(${this.translate}) rotate(${this.rotate2})`
+    }
+  }
+
+  created() {
+    window.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        this.toggleModal()
+      }
+    })
+    const { width, height } = document.body.getBoundingClientRect()
+    const x = width / 2, y = height / 2
+    window.addEventListener('mousemove', event => {
+      event.clientX
+      event.clientY
+
+      if (event.clientX > x) {
+        console.log('left')
+      } else {
+        console.log('right')
+      }
+      if (event.clientY < y) {
+        console.log('top')
+      } else {
+        console.log('bottom')
+      }
+    })
+  }
+
+  toggleModal() {
+    this.isActive = !this.isActive
+  }
+
+  toggleHover(event: PointerEvent) {
+    const element = event.target as HTMLElement
+    element.classList.toggle('is-hovered')
   }
 
   // get tang() {
@@ -41,33 +103,37 @@ export default class Card extends Vue {
 </script>
 
 <style lang="sass">
-  //https://stackoverflow.com/questions/12813573/position-icons-into-circle
+  // help from: https://stackoverflow.com/questions/12813573/position-icons-into-circle
+
+  $spaceBetween: 1
+  $itemWidth: 6em
+  $itemHeight: 2.5em
+  $itemMax: max($itemWidth, $itemHeight)
+  $itemMin: min($itemWidth, $itemHeight)
 
   .pi-menu
-    //background: red
+    --is: 2.5em /* item size */
+    --iw: #{$itemWidth}
+    --ih: #{$itemHeight}
+    --imax: #{$itemMax}
+    --imin: #{$itemMin}
+    --rel: #{$spaceBetween} /* 1 = one item size */
+    --r: calc(.5*(1 + var(--rel))*var(--imax)/(3.60/var(--a))) /* circle radius */
+    --s: calc(2*var(--r) + var(--imax)) /* container size */
 
-  .tcontainer
-    --is: 5em /* item size */
-    --rel: 1 /* how much extra space we want between images, 1 = one image size */
-    --r: calc(.5*(1 + var(--rel))*var(--is)/(3.60/var(--m))) /* circle radius */
-    --s: calc(2*var(--r) + var(--is)) /* container size */
     position: relative
     width: var(--s)
     height: var(--s)
-    background: silver /* to show images perfectly fit in container */
+    //background: silver
 
-  .tcontainer a
-    position: absolute
-    top: 50%
-    left: 50%
-    margin: calc(-.5*var(--is))
-    width: var(--is)
-    height: var(--is)
-    --az: calc(var(--i)*1turn/var(--m))
-    transform: rotate(var(--az)) translate(var(--r)) rotate(calc(-1 * var(--az)))
-
-    display: block
-    background: rgba(0,0,0,0.1)
-  img
-    max-width: 100%
+    a
+      position: absolute
+      display: block
+      top: 50%
+      left: 50%
+      margin: -.5*$itemHeight -.5*$itemWidth
+      width: var(--iw)
+      height: var(--ih)
+      --turn: calc(var(--i) * 1turn / var(--a))
+      transform: rotate(var(--turn)) translate(var(--r)) rotate(calc(-1*var(--turn)))
 </style>
