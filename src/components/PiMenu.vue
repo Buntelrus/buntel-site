@@ -1,16 +1,18 @@
 <template>
   <div class="modal" :class="{'is-active': isActive}">
-    <input type="number" v-model="numberItems">
-    <input type="number" v-model="iRotate1">
-    <input type="number" v-model="iTranslate">
-    <input type="number" v-model="iRotate2">
+<!--    <input type="number" v-model="numberItems">-->
+<!--    <input type="number" v-model="iRotate1">-->
+<!--    <input type="number" v-model="iTranslate">-->
+<!--    <input type="number" v-model="iRotate2">-->
 <!--    <div class="modal-background"></div>-->
-    <div class="modal-content">
+    <div class="modal-content has-text-centered">
       <menu class="pi-menu has-text-centered" :style="{'--a': numberItems}">
 <!--        <a class="button" :style="style1">Item 1x</a>-->
 <!--        <a v-for="(item, i) in itmes.slice(1)" :key="item" class="button" :style="{'&#45;&#45;i': i + 2}"-->
-        <a v-for="(item, i) in itmes" :key="item" class="button" :style="{'--i': i + 1}"
-          @click="toggleHover">
+        <a class="button" v-for="(item, i) in itmes" :key="item"
+           :class="{'is-hovered': hoveredItem === i}"
+           :style="{'--i': i + 1}"
+           @click="toggleHover">
           {{ item }}
         </a>
       </menu>
@@ -33,6 +35,8 @@ export default class Card extends Vue {
   iRotate1 = -25
   iRotate2 = 25
   iTranslate = 666
+
+  hoveredItem: number|null = null
 
   get itmes() {
     const arr = []
@@ -67,22 +71,85 @@ export default class Card extends Vue {
         this.toggleModal()
       }
     })
-    const { width, height } = document.body.getBoundingClientRect()
+
+    const width = document.documentElement.clientWidth,
+        height = document.documentElement.clientHeight
     const x = width / 2, y = height / 2
     window.addEventListener('mousemove', event => {
-      event.clientX
-      event.clientY
+      const bTurn = 25 / 2
+      const bDeg = 90 / 2
 
-      if (event.clientX > x) {
-        console.log('left')
-      } else {
-        console.log('right')
+      let chapter = 0 //there are 8 chapters each 12.5 turn or 45°
+
+      const a = x - event.clientX,
+          b = y - event.clientY
+
+      const ap = Math.abs(a) / x * 100,
+          bp = Math.abs(b) / y * 100
+
+      let apGtBp = false
+
+      console.log('ap, bp:', ap, bp)
+      let p = ap / bp
+      if (p > 1) {
+        p = bp / ap
+        apGtBp = true
       }
-      if (event.clientY < y) {
-        console.log('top')
-      } else {
-        console.log('bottom')
+
+      const log = {
+        x,
+        y,
+        a,
+        b,
+        width,
+        height,
+        clientX: event.clientX,
+        clientY: event.clientY
       }
+      // console.log(log)
+      //top-right is default
+      if (a < 0 && b < 0) {
+        //bottom-right
+        console.log('bottom-right')
+        if (apGtBp) {
+          chapter = 2
+        } else {
+          chapter = 3
+        }
+      } else if (a > 0 && b < 0) {
+        //bottom-left
+        console.log('bottom-left')
+        if (apGtBp) {
+          chapter = 5
+        } else {
+          chapter = 4
+        }
+      } else if (a > 0 && b > 0) {
+        //top-left
+        console.log('top-left')
+        if (apGtBp) {
+          chapter = 6
+        } else {
+          chapter = 7
+        }
+      } else {
+        console.log('top-right')
+        if (apGtBp) {
+          chapter = 1
+        }
+      }
+
+      const subtract = chapter % 2 === 1
+      console.log('chapter', chapter)
+      const tmpTurn = p * bTurn
+      const tmpDeg = p * bDeg
+      const turn = subtract ? chapter * bTurn + bTurn - tmpTurn : chapter * bTurn + tmpTurn
+      const deg = subtract ? chapter * bDeg + bDeg - tmpDeg : chapter * bDeg + tmpDeg
+      console.log('turn:', turn)
+      console.log('deg:', deg)
+
+      const dPerItem = 360 / this.numberItems
+      this.hoveredItem = Math.round(deg / dPerItem)
     })
   }
 
@@ -123,6 +190,7 @@ export default class Card extends Vue {
     --p: calc(1turn / var(--a)) /* turn per item */
 
     position: relative
+    display: inline-block
     width: var(--s)
     height: var(--s)
     //background: silver
