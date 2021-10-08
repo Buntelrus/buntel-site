@@ -120,6 +120,7 @@ export default class Card extends Vue {
     --rel: #{$spaceBetween} /* 1 = one item size */
     --r: calc(.5*(1 + var(--rel))*var(--imax)/(3.60/var(--a))) /* circle radius */
     --s: calc(2*var(--r) + var(--imax)) /* container size */
+    --p: calc(1turn / var(--a)) /* turn per item */
 
     position: relative
     width: var(--s)
@@ -134,6 +135,6 @@ export default class Card extends Vue {
       margin: -.5*$itemHeight -.5*$itemWidth
       width: var(--iw)
       height: var(--ih)
-      --turn: calc(var(--i) * 1turn / var(--a))
-      transform: rotate(var(--turn)) translate(var(--r)) rotate(calc(-1*var(--turn)))
+      --turn: calc(var(--i) * var(--p) - var(--p) - .25turn)
+      transform: rotate(var(--turn)) translate(var(--r)) rotate(calc(1turn - var(--turn)))
 </style>
