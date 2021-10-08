@@ -10,7 +10,11 @@
       </a>
     </div>
     <div class="navbar-menu" :class="{open: menuOpen}">
-      <router-link v-for="item in menu" :key="item.url" :to="item.url" class="navbar-item" @click="collapseMenu" :target="item.newTab ? '_blank' : ''">{{ item.text }}</router-link>
+      <router-link v-for="item in menu" :key="item.url"
+           class="navbar-item" active-class="is-active"
+           :to="item.url" @click="collapseMenu" :target="item.newTab ? '_blank' : ''">
+        {{ item.text }}
+      </router-link>
     </div>
   </nav>
 </template>

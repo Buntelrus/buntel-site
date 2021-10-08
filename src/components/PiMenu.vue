@@ -26,6 +26,9 @@ export default class Card extends Vue {
   isActive = true
   hoveredItem: number|null = null
 
+  onMouseMove!: (event: MouseEvent) => void
+  onMouseDown!: (event: MouseEvent) => void
+
   get numberItems() {
     return this.menu.length
   }
@@ -36,14 +39,14 @@ export default class Card extends Vue {
         this.toggleModal()
       }
     })
-    window.addEventListener('mousemove', event => {
-      this.hoveredItem = this.calculateItemIndex(event)
-    })
-    window.addEventListener('mousedown', event => {
+    this.onMouseMove = event => this.hoveredItem = this.calculateItemIndex(event)
+    this.onMouseDown = event => {
       this.toggleModal()
       const url = this.menu[this.calculateItemIndex(event)].url
       this.$router.push(url)
-    })
+    }
+
+    this.activate()
   }
 
   calculateItemIndex(event: MouseEvent) {
@@ -106,11 +109,22 @@ export default class Card extends Vue {
 
   toggleModal() {
     this.isActive = !this.isActive
+    if (this.isActive) {
+      this.activate()
+    } else {
+      this.deactivate()
+    }
   }
 
-  toggleHover(event: PointerEvent) {
-    const element = event.target as HTMLElement
-    element.classList.toggle('is-hovered')
+  activate() {
+    console.log('activate')
+    window.addEventListener('mousemove', this.onMouseMove)
+    window.addEventListener('mousedown', this.onMouseDown)
+  }
+  deactivate() {
+    console.log('deactivate')
+    window.removeEventListener('mousemove', this.onMouseMove)
+    window.removeEventListener('mousedown', this.onMouseDown)
   }
 }
 </script>
