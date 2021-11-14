@@ -14,15 +14,15 @@
 
 </template>
 
-<script lang="ts">
-import {Options, Vue} from "vue-class-component"
+<script setup lang="ts">
 import {IMenu} from "@/utils/api"
 
-@Options({
-  props: ['menu']
-})
-export default class Card extends Vue {
-  menu: IMenu[] = []
+const {menu} = defineProps<{menu: IMenu}>()
+</script>
+
+<script lang="ts">
+import {Vue} from "vue-class-component";
+export default class PiMenu extends Vue {
   isActive = true
   hoveredItem: number|null = null
 

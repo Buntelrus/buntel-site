@@ -19,21 +19,15 @@
   </nav>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from "vue-class-component"
+<script setup lang="ts">
 import {IMenu} from "@/utils/api"
+import {ref} from "vue";
 
-@Options({
-  props: ['menu'],
-})
-export default class Navbar extends Vue {
-  menu: IMenu[] = []
-  menuOpen = false
-
-  collapseMenu() {
-    this.menuOpen = false
+const menuOpen = ref<boolean>(false)
+const {menu} = defineProps<{menu: IMenu}>()
+function collapseMenu() {
+    menuOpen.value = false
   }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

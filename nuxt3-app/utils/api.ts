@@ -60,7 +60,7 @@ const pages: IPage[] = [
         content: 'Hello About'
     },
 ]
-const global: IGlobal = {
+const myglobal: IGlobal = {
     menu: {
         items: []
     },
@@ -116,7 +116,7 @@ const global: IGlobal = {
 }
 
 const api = {
-    global,
+    global: myglobal,
     pages
 }
 

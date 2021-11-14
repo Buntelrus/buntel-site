@@ -25,16 +25,10 @@
   </footer>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from "vue-class-component"
+<script setup lang="ts">
 import { IFooter } from '@/utils/api'
 
-@Options({
-  props: ['footer'],
-})
-export default class Navbar extends Vue {
-  footer!: IFooter
-}
+const {footer} = defineProps<{footer: IFooter}>()
 </script>
 
 <style scoped lang="sass">

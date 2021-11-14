@@ -1,35 +1,44 @@
 <script setup lang="ts">
-  import {useAsyncData} from "#app";
-  import fakeApi, {IGlobal, IPage, IMenu} from "@/utils/api"
+  import {computed} from "vue";
+  import {state, dispatch} from "~/mystore";
+  import {IPage} from "~/utils/api";
 
-  // const { data } = await useAsyncData('pages', () => fakeApi('pages'))
-  const {data} = await useAsyncData('test', () => Promise.resolve('some data'))
+  const makeIMenu = (page: IPage) => { return { url: '/' + page.slug, text: page.title, newTab: false }}
+
+  const navMenu = computed(() => state.pages
+      .filter(page => page.slug !== 'home')
+      .map(makeIMenu))
+
+  const piMenu = computed(() => state.pages.map(makeIMenu))
 </script>
 <template>
   <h1>Default Layout</h1>
-<!--  <PiMenu :menu="piMenu"/>-->
-<!--  <section class="section">-->
-<!--    <Navbar :menu="navMenu"/>-->
-<!--  </section>-->
-<!--  <Footer v-if="global" :footer="global.footer"/>-->
+<!--  <p>{{ navMenu }}</p>-->
+  <PiMenu v-if="piMenu.length" :menu="piMenu"/>
+  <section v-if="navMenu.length" class="section">
+    <Navbar :menu="navMenu"/>
+  </section>
   <section class="section">
     <slot/>
   </section>
   <button @click="log">log</button>
+  <Footer v-if="state.global && state.global.footer" :footer="state.global.footer"/>
 </template>
 
 <script lang="ts">
+import {dispatch} from "~/mystore";
+
 export default {
   name: "default",
-  created() {
+  async created() {
+    dispatch('fetchData')
     if (process.client) {
-      console.log(data)
+      console.log('client')
     }
   },
   methods: {
     log() {
-      console.log('test')
-        console.log(data)
+      console.log(this.state)
     }
   }
 }
