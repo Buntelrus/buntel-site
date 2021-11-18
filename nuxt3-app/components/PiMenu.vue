@@ -27,7 +27,7 @@ interface Reactive {
 }
 
 const data = reactive<Reactive>({
-  isActive: true,
+  isActive: false,
   hoveredItem: null
 })
 
@@ -46,7 +46,6 @@ if (process.client) {
       toggleModal()
     }
   })
-  activate()
 }
 
 function calculateItemIndex(event: MouseEvent) {

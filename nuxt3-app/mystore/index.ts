@@ -1,6 +1,5 @@
-import {reactive, computed} from "vue";
+import {reactive, computed, Ref} from "vue";
 import fakeApi, {IGlobal, IPage} from "~/utils/api";
-import page from "../../framework/packages/nuxt3/src/pages/runtime/page.vue";
 
 // makes all non array|bool|string types nullable
 type NullableState<T> = {
@@ -57,5 +56,5 @@ const actions = {
 }
 
 export function dispatch<K extends keyof typeof actions>(type: K, ...args: Parameters<typeof actions[K]>) {
-  (<any>actions[type])(...args)
+  return (<any>actions[type])(...args)
 }
