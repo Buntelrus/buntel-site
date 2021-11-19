@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, reactive} from "vue"
+import {computed, onMounted, reactive} from "vue"
 import {IMenu} from "@/utils/api"
 import {useRouter} from "vue-router";
 
@@ -118,15 +118,19 @@ function toggleModal() {
 
 function activate() {
   console.log('activate')
-  window.addEventListener('mousemove', onMouseMove)
+  // window.addEventListener('mousemove', onMouseMove)
   window.addEventListener('mousedown', onMouseDown)
 }
 
 function deactivate() {
   console.log('deactivate')
-  window.removeEventListener('mousemove', onMouseMove)
+  // window.removeEventListener('mousemove', onMouseMove)
   window.removeEventListener('mousedown', onMouseDown)
 }
+
+onMounted(() => {
+  window.addEventListener('mousemove', onMouseMove)
+})
 </script>
 
 <style lang="sass">

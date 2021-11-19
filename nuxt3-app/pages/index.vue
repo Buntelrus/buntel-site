@@ -1,8 +1,11 @@
 <template>
-  <div class="root">
-    <p>Index view</p>
-    <button @click="log">log</button>
-    <button type="button" @click="alert('wow')">wow</button>
+  <div>
+    <h1>
+      <p>Hello,</p>
+      <p>I'm Julian,</p>
+      <p><span class="intend">web developer</span></p>
+    </h1>
+    <Contact/>
   </div>
 </template>
 

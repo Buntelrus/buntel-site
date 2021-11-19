@@ -1,14 +1,14 @@
 <template>
   <div>
     <div>Hello World</div>
-    <p>{{ page.content }}</p>
+    <div>{{ page.content }}</div>
 <!--    <Content v-for="content in page.content" :content="content" :key="`${content.__component}-${content.id}`"/>-->
   </div>
 </template>
 
 <script setup lang="ts">
 import {useMeta} from "#meta";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {useNuxtApp, useState} from "#app";
 import {state} from "~/mystore";
 

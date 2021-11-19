@@ -26,7 +26,7 @@
 </script>
 <template>
   <div class="layout">
-    <h1>Default Layout</h1>
+<!--    <h1>Default Layout</h1>-->
     <PiMenu v-if="piMenu.length" :menu="piMenu"/>
     <section v-if="navMenu.length" class="section">
       <Navbar :menu="navMenu"/>
@@ -34,7 +34,6 @@
     <section class="section">
       <slot/>
     </section>
-    <button @click="log">log</button>
     <Footer v-if="ssrState.global && ssrState.global.footer" :footer="ssrState.global.footer"/>
   </div>
 </template>
