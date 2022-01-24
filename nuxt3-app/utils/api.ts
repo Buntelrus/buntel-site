@@ -51,6 +51,10 @@ const pages: IPage[] = [
         title: 'Skills',
         content: 'Hello Skill'
     },{
+        slug: 'three',
+        title: 'ThreeJS Demo',
+        content: 'Hello Three.js'
+    },{
         slug: 'contact',
         title: 'Contact',
         content: 'Hello Contact'
