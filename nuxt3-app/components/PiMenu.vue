@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import {computed, onMounted, reactive} from "vue"
 import {IMenu} from "@/utils/api"
-import {useRouter} from "vue-router";
+import {useRouter} from "vue-router"
 
 const {menu} = defineProps<{ menu: IMenu[] }>()
 const router = useRouter()
