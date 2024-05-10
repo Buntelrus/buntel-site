@@ -22,12 +22,74 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="asserts/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
-    <style></style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Pacifico&display=swap');
+
+        :root {
+            --background-color: #262A2C;
+            --font-color: #F2F3F7;
+            --neon-color: #F9C22E;
+            --neon-shadow-color1: #f8e5aa;
+            --neon-shadow-color2: #ffa102;
+
+
+            --gap1: 0.5rem;
+            --gap2: calc(2 * var(--gap1));
+            --gap3: calc(2 * var(--gap2));
+            --gap4: calc(3 * var(--gap2));
+
+            --radius1: 5px;
+            --radius2: calc(2 * var(--radius1));
+
+            --neon-shadow1: 2px;
+            --neon-shadow2: calc(2 * var(--neon-shadow1));
+            --neon-shadow3: calc(3 * var(--neon-shadow1));
+            --neon-shadow4: calc(4 * var(--neon-shadow1));
+            --neon-shadow5: calc(5 * var(--neon-shadow1));
+            --neon-shadow6: calc(6 * var(--neon-shadow1));
+            --neon-shadow7: calc(7 * var(--neon-shadow1));
+        }
+
+        body {
+            font-family: "Barlow Semi Condensed", sans-serif;
+            background-color: var(--background-color);
+            color: var(--font-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        main {
+            max-width: 70rem;
+            padding: var(--gap4);
+            background: rgba(0, 0, 0, 0.075);
+            border-radius: var(--radius2);
+            border: 1px solid var(--neon-shadow-color2);
+            box-shadow: 3px 3px 10px 3px #131516;
+        }
+
+        h1 {
+            font-family: "Pacifico", cursive;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 4.5rem;
+            line-height: 1.5;
+            color: var(--neon-color);
+            text-shadow: 0 0 var(--neon-shadow1) var(--neon-shadow-color1), 0 0 var(--neon-shadow2) var(--neon-shadow-color1), 0 0 var(--neon-shadow3) var(--neon-shadow-color2), 0 0 var(--neon-shadow4) var(--neon-shadow-color2), 0 0 var(--neon-shadow5) var(--neon-shadow-color2), 0 0 var(--neon-shadow6) var(--neon-shadow-color2), 0 0 var(--neon-shadow7) var(--neon-shadow-color2);
+        }
+
+        a {
+            color: var(--neon-color);
+        }
+
+    </style>
 </head>
 <body>
 <header></header>
 <main>
-    <h1>Good things will be in progress<br>soon!</h1>
+    <h1>Good things will be in <br>progress soon!</h1>
     <p>This website is now under maintenance. Please be patient, I'm very busy at the moment.</p>
     <p>Good things take time!</p>
 </main>
